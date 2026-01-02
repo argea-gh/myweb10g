@@ -128,7 +128,7 @@ function openProductModal(product) {
   <button class="btn btn-primary" id="addToCartBtn" data-id="${product.id}">
     ➕ Tambah ke Keranjang
   </button>
-  <a href="https://wa.me/6282241900467?text=Saya%20mau%20pesan%20${encodeURIComponent(product.name)}%2C%20harga%20${priceFormatted}." 
+  <a href="https://wa.me/6282241900467?text=Saya%20mau%20pesan%20${encodeURIComponent(product.name)}%2C%20harga%20${encodeURIComponent(formatRupiah(product.price))}." 
      target="_blank" class="btn btn-whatsapp">
     📲 Langsung ke WhatsApp
   </a>
