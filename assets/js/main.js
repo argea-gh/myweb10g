@@ -18,6 +18,15 @@ const cartTotal = document.getElementById('cartTotal');
 const checkoutBtn = document.getElementById('checkoutBtn');
 
 // ──────────────────────────────────────────
+// HELPER: Format Rupiah dengan spasi (Rp 120.000)
+// ──────────────────────────────────────────
+
+function formatRupiah(angka) {
+  if (angka == null || angka === '') return 'Rp 0';
+  return 'Rp ' + parseInt(angka).toLocaleString('id-ID');
+}
+
+// ──────────────────────────────────────────
 // Mobile Navigation Toggle
 // ──────────────────────────────────────────
 
@@ -56,7 +65,7 @@ function renderProducts(category = 'all') {
 
   grid.innerHTML = '';
   filtered.forEach(product => {
-    const priceFormatted = `Rp${product.price.toLocaleString('id-ID')}`;
+    const priceFormatted = formatRupiah(product.price);
     const card = document.createElement('div');
     card.className = 'product-card stagger-item slide-up';
     card.innerHTML = `
@@ -95,7 +104,7 @@ function renderProducts(category = 'all') {
 // ──────────────────────────────────────────
 
 function openProductModal(product) {
-  const priceFormatted = `Rp${product.price.toLocaleString('id-ID')}`;
+  const priceFormatted = formatRupiah(product.price);
   modalBody.innerHTML = `
     <div class="product-modal-header">
       <img src="${product.image}" alt="${product.name}" />
@@ -205,7 +214,7 @@ function updateCartDisplay(cart) {
   } else {
     cartItems.innerHTML = cart.map(item => {
       const total = item.price * item.quantity;
-      const totalFormatted = `Rp${total.toLocaleString('id-ID')}`;
+      const totalFormatted = formatRupiah(total);
       return `
         <div class="cart-item">
           <img src="${item.image}" alt="${item.name}" />
@@ -229,7 +238,7 @@ function updateCartDisplay(cart) {
 
   // Update total
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  cartTotal.textContent = `Rp${total.toLocaleString('id-ID')}`;
+  cartTotal.textContent = formatRupiah(total);
 
   // Update checkout button
   if (cart.length > 0) {
