@@ -253,7 +253,7 @@ function updateCartDisplay(cart) {
           // <button class="cart-remove" data-id="${item.id}">×</button>
         // </div>
        
-        // Ganti dengan ini
+        // Tambahan : Ganti dengan ini
         <div class="cart-item" data-id="${item.id}">
   <img src="${item.image}" alt="${item.name}" />
   <div class="cart-info">
@@ -267,6 +267,7 @@ function updateCartDisplay(cart) {
   </div>
   <button class="cart-remove" data-id="${item.id}">×</button>
 </div>
+// End of Ganti dengan ini
       `;
     }).join('');
     
@@ -409,4 +410,10 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   loadCart();
+});
+// Tambahan
+// Buka keranjang saat klik tombol akses
+document.getElementById('cartAccessBtn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  showCartPanel();
 });
