@@ -206,6 +206,33 @@ function removeItem(id) {
   saveCart(cart);
   updateCartDisplay(cart);
 }
+// ──────────────────────────────────────────
+// CART: Ubah Jumlah (+ / -)
+// ──────────────────────────────────────────
+
+function changeQuantity(id, delta) {
+  const cart = JSON.parse(localStorage.getItem('herbaprimaCart') || '[]');
+  const item = cart.find(i => i.id === id);
+  
+  if (item) {
+    item.quantity += delta;
+    if (item.quantity < 1) item.quantity = 1;
+    saveCart(cart);
+    updateCartDisplay(cart);
+  }
+}
+
+// Event delegation untuk tombol +/- (agar tetap jalan saat dinamis)
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('qty-plus')) {
+    const id = e.target.closest('.cart-item').dataset.id;
+    changeQuantity(id, 1);
+  } else if (e.target.classList.contains('qty-minus')) {
+    const id = e.target.closest('.cart-item').dataset.id;
+    changeQuantity(id, -1);
+  }
+});
+// ───── End of CART: Ubah Jumlah (+ / -) ────
 
 function updateCartDisplay(cart) {
   // Update cart items UI
@@ -216,15 +243,30 @@ function updateCartDisplay(cart) {
       const total = item.price * item.quantity;
       const totalFormatted = formatRupiah(total);
       return `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}" />
-          <div class="cart-info">
-            <h4>${item.name}</h4>
-            <div class="price">${totalFormatted}</div>
-            <div>x${item.quantity}</div>
-          </div>
-          <button class="cart-remove" data-id="${item.id}">×</button>
-        </div>
+        // <div class="cart-item">
+          // <img src="${item.image}" alt="${item.name}" />
+          // <div class="cart-info">
+            // <h4>${item.name}</h4>
+            // <div class="price">${totalFormatted}</div>
+            // <div>x${item.quantity}</div>
+          // </div>
+          // <button class="cart-remove" data-id="${item.id}">×</button>
+        // </div>
+       
+        // Ganti dengan ini
+        <div class="cart-item" data-id="${item.id}">
+  <img src="${item.image}" alt="${item.name}" />
+  <div class="cart-info">
+    <h4>${item.name}</h4>
+    <div class="price">${formatRupiah(item.price)}</div>
+    <div class="qty-control">
+      <button class="qty-btn qty-minus">−</button>
+      <span class="qty-value">${item.quantity}</span>
+      <button class="qty-btn qty-plus">+</button>
+    </div>
+  </div>
+  <button class="cart-remove" data-id="${item.id}">×</button>
+</div>
       `;
     }).join('');
     
