@@ -250,7 +250,7 @@ function updateCartDisplay(cart) {
     cartItems.innerHTML = cart.map(item => {
       const total = item.price * item.quantity;
       const totalFormatted = formatRupiah(total);
-      return 
+      return ` 
        
         // Tambahan : Ganti dengan ini
         <div class="cart-item" data-id="${item.id}">
